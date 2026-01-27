@@ -6,6 +6,30 @@ Automated compilation forge for Pwnagotchi dependencies (PyTorch, Torchvision, N
 
 To compile heavy libraries like PyTorch, you need a robust host. A Raspberry Pi 4 (4GB or 8GB) running **Raspberry Pi OS (64-bit Bookworm)** is recommended.
 
+### Install the dependencies
+
+```bash
+sudo apt update
+sudo apt install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
+    build-essential \
+    cmake \
+    git \
+    pkg-config \
+    libssl-dev \
+    zlib1g-dev \
+    dphys-swapfile \
+    qemu-user-static \
+    binfmt-support 
+
+```
+
+---
+
 ### 1. Prepare Swap Space
 Compiling PyTorch requires significant memory during the linking phase. Increase your swap size to 4GB to prevent Out-Of-Memory crashes.
 
@@ -48,7 +72,9 @@ The forge uses a "Golden" stage-by-stage script to build dependencies in the cor
 Before running the compile script, ensure you have the builder image ready.
 
 ```bash
-# From the root of this repository
+# From the profile folder matching your target architecture
+```bash
+cd profiles/arm32-v7l
 docker build --platform linux/arm/v7 -t kalibuild:latest -f Dockerfile.build .
 ```
 
@@ -56,7 +82,6 @@ docker build --platform linux/arm/v7 -t kalibuild:latest -f Dockerfile.build .
 Navigate to the profile matching your target architecture (e.g., `arm32-v7l` for RPi02W/RPi3 running 32-bit OS) and run the compile script.
 
 ```bash
-cd profiles/arm32-v7l
 chmod +x total_compile.sh
 ./total_compile.sh
 ```
