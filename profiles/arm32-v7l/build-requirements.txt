@@ -1,8 +1,8 @@
 # Simplified build-requirements.txt for the RPi4 Build Phase
 # gym is replaced with gymnasium + shimmy for compatibility
-gymnasium==0.29.1
+opencv-python>=3.0
+gym==0.21.0
 #shimmy[gym-v21]
-shimmy==1.3.0
 pycryptodome
 pigpio
 gpiozero
@@ -32,9 +32,6 @@ rpi-lgpio
 #torch>=2.0.1
 #torchvision>=0.15.2
 
-
-#gymnasium==0.29.1
-#shimmy==1.3.0
 torch==2.1.0a0+git7bcf7da
 torchvision==0.16.0
 #stable-baselines3==2.1.0

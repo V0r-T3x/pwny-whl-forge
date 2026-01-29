@@ -16,6 +16,7 @@ export MAX_JOBS=3               # Keep at 2 to avoid OOM during linking
 cat << EOF > constraints.txt
 torch==2.1.0a0+git7bcf7da
 numpy<2.0.0
+gym==0.21.0
 pandas<2.1.0
 jinja2==3.0.3
 markupsafe==3.0.3
@@ -47,7 +48,7 @@ docker run -i --rm \
 
     # THE FIX: Force Python to identify as armv7l
     export _PYTHON_HOST_PLATFORM="linux-armv7l"
-    export PIP_ONLY_BINARY=":all:"
+    export PIP_PREFER_BINARY="1"
 
     set -e # Fail fast if any stage breaks
     export PIP_BREAK_SYSTEM_PACKAGES=1
@@ -55,9 +56,9 @@ docker run -i --rm \
     # Inject missing system headers (Hardening the layer)
     # Includes DBus fix and Atomic ops for ARMv7 linking 
     apt-get update && apt-get install -y \
-        git build-essential libopenblas-dev libssl-dev \
-        libdbus-1-dev pkg-config libglib2.0-dev libatomic-ops-dev \
-        cmake ninja-build libatomic1 \
+        git curl build-essential libopenblas-dev libssl-dev \
+        libdbus-1-dev pkg-config libglib2.0-dev libatomic-ops-dev libcap-dev \
+        cmake ninja-build  libatomic1 libcap-dev patchelf \
         libjpeg-dev libpng-dev zlib1g-dev libavcodec-dev libavformat-dev libswscale-dev
 
     # --- Phase 1: NumPy (The Foundation) ---
@@ -70,20 +71,40 @@ docker run -i --rm \
     NP_WHEEL=$(find "$WHEELHOUSE_PATH" -name "numpy-${NUMPY_VERSION}*.whl" | head -n 1)
     python3 -m pip install "$NP_WHEEL"
     
-    # --- Critical build-time deps for PyTorch ---
+    # --- Critical build-time deps for PyTorch & Gym ---
     # Instead of installing, we WHEEL them into the wheelhouse first
     # then install from that local folder.
-    echo "--- Forging build-time dependencies ---"
+    echo "--- Forging build-time dependencies (cloudpickle, etc) ---"
     python3 -m pip wheel \
+        --extra-index-url https://www.piwheels.org/simple \
         --find-links="$WHEELHOUSE_PATH" \
         --wheel-dir="$WHEELHOUSE_PATH" \
-        pyyaml setuptools typing_extensions "cython<3.0.0"
+        -c /work/constraints.txt \
+        pyyaml setuptools wheel typing_extensions "cython<3.0.0" "cloudpickle>=1.2.0" "opencv-python>=3.0"
 
-    # Now install them from the wheelhouse you just populated
+    # Now install some of them from the wheelhouse you just populated
     python3 -m pip install \
         --no-index \
         --find-links="$WHEELHOUSE_PATH" \
-        pyyaml setuptools typing_extensions "cython<3.0.0"
+        pyyaml setuptools wheel typing_extensions "cython<3.0.0"
+
+    # --- Phase 1.5: Patching Gym for Python 3.11 ---
+    if [ ! -f "$WHEELHOUSE_PATH/gym-0.21.0-py3-none-any.whl" ]; then
+      echo "--- Forging Patched Gym 0.21.0 ---"
+      curl -L https://github.com/openai/gym/archive/refs/tags/v0.21.0.tar.gz -o gym-v0.21.0.tar.gz
+      tar -xzf gym-v0.21.0.tar.gz
+      cd gym-0.21.0
+      # FIX: The original sed was only touching setup.py; ensure we hit requirements too
+      sed -i 's/opencv-python>=3./opencv-python>=3.0/g' setup.py
+      find . -name "*.txt" -exec sed -i 's/opencv-python>=3./opencv-python>=3.0/g' {} +
+      python3 setup.py bdist_wheel
+      cp dist/*.whl $WHEELHOUSE_PATH/
+      cd ..
+      rm -rf gym-0.21.0* gym-v0.21.0.tar.gz
+    fi
+
+    # CRITICAL: Install it NOW so pip stops looking at piwheels for dependencies
+    python3 -m pip install --no-cache-dir --no-index --find-links=$WHEELHOUSE_PATH gym==0.21.0
 
 # --- Phase 2: PyTorch ---
     if ls $WHEELHOUSE_PATH/torch-2.1.*.whl 1> /dev/null 2>&1; then
@@ -126,7 +147,7 @@ docker run -i --rm \
     python3 -m pip wheel --wheel-dir=$WHEELHOUSE_PATH \
         --extra-index-url https://www.piwheels.org/simple \
         -c constraints.txt \
-        $WHEELHOUSE_PATH/torch-*.whl stable-baselines3==2.1.0
+        "$WHEELHOUSE_PATH"/torch-*.whl "$WHEELHOUSE_PATH"/gym-*.whl stable-baselines3==1.8.0
 
     # Install the Golden Wheel from the local vault
     python3 -m pip install --no-index --find-links=$WHEELHOUSE_PATH \
@@ -148,7 +169,7 @@ docker run -i --rm \
 
     # --- Phase 3.5: Stable Baselines 3 ---
     echo '--- Phase 3.5: Building Stable Baselines 3 ---'
-    python3 -m pip wheel stable-baselines3==2.1.0 \
+    python3 -m pip wheel stable-baselines3==1.8.0 \
       -c constraints.txt \
       --no-build-isolation \
       --find-links=/work/wheelhouse \
@@ -157,25 +178,33 @@ docker run -i --rm \
     # --- Phase 4: Final Assembly (The 0.29 Compatibility Fix) ---
     echo '--- Phase 4: Building remaining requirements ---'
 
-    # 1. THE PRE-SWEEP: Get the support libraries first (online)
-    # This populates 'requests' and other basics that torchvision needs
-    python3 -m pip wheel --wheel-dir=$WHEELHOUSE_PATH \
-      -c /work/constraints.txt \
-      --extra-index-url https://www.piwheels.org/simple \
-      python-prctl requests pillow numpy<2.0.0
+    # 1. Identify your specific forged wheels (Ensures pip sees the exact local file)
+    TORCH_WHEEL=$(find "$WHEELHOUSE_PATH" -name "torch-2.1.0*.whl" | head -n 1)
+    VISION_WHEEL=$(find "$WHEELHOUSE_PATH" -name "torchvision-0.16.0*.whl" | head -n 1)
+    GYM_WHEEL=$(find "$WHEELHOUSE_PATH" -name "gym-0.21.0*.whl" | head -n 1)
 
-    # 2. THE LOCAL LOCKDOWN: Verify your forged AI wheels
-    # Now 'requests' is in the wheelhouse, so this won't fail
-    python3 -m pip wheel --wheel-dir=$WHEELHOUSE_PATH \
-      -c /work/constraints.txt \
-      --find-links=$WHEELHOUSE_PATH \
-      --no-index \
-      gymnasium==0.29.1 shimmy==1.3.0 torch torchvision stable-baselines3
-
-    # 3. THE FINAL HARVEST: Get everything else from your requirements file
-    python3 -m pip wheel -r /work/build-requirements.txt \
+    # 2. THE LOCAL LOCKDOWN: Resolve AI Stack first (No Index)
+    # We include numpy<2.0.0 here to lock the resolver's state
+    echo "--- Locking AI Stack and NumPy < 2.0.0 ---"
+    python3 -m pip wheel \
       --wheel-dir=$WHEELHOUSE_PATH \
       --find-links=$WHEELHOUSE_PATH \
-      -c /work/constraints.txt \
-      --extra-index-url https://www.piwheels.org/simple
+      --no-index \
+      "$TORCH_WHEEL" \
+      "$VISION_WHEEL" \
+      "$GYM_WHEEL" \
+      "numpy<2.0.0" \
+      stable-baselines3==1.8.0
+
+    # 3. THE GENERAL HARVEST: Filter out what we just locked
+    # This prevents pip from reconsidering them and going online for 2.4.1
+    grep -vE "gym|torch|stable-baselines3" /work/build-requirements.txt > /tmp/general-reqs.txt
+
+    echo "--- Harvesting remaining system requirements ---"
+    python3 -m pip wheel -r /tmp/general-reqs.txt \
+      --wheel-dir=$WHEELHOUSE_PATH \
+      --find-links=$WHEELHOUSE_PATH \
+      --no-build-isolation \
+      --extra-index-url https://www.piwheels.org/simple \
+      -c /work/constraints.txt
 EOF

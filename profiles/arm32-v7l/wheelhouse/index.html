@@ -1,89 +1,74 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Forge: arm32-v7l (Py 3.11)</title>
-    <style>
-        body { font-family: 'SF Mono', 'Courier New', monospace; background: #050505; color: #00ff41; padding: 2rem; line-height: 1.5; }
-        h2 { border-bottom: 2px solid #00ff41; padding-bottom: 10px; color: #fff; }
-        .nav-back { margin-bottom: 20px; display: block; color: #888; text-decoration: none; font-size: 0.9rem; }
-        .nav-back:hover { color: #00ff41; }
-        .wheel-list { margin-top: 20px; }
-        a.wheel-link { color: #00bcff; text-decoration: none; display: block; padding: 8px; border-bottom: 1px solid #1a1a1a; transition: 0.2s; }
-        a.wheel-link:hover { background: #111; color: #fff; border-left: 3px solid #00ff41; padding-left: 12px; }
-        .footer { margin-top: 40px; color: #444; font-size: 0.8rem; border-top: 1px solid #1a1a1a; padding-top: 10px; }
-    </style>
-</head>
 <body>
-    <a href="../../../index.html" class="nav-back">&larr; Back to Main Forge</a>
-    <h2>arm32-v7l / Python 3.11</h2>
-    <div class="wheel-list">
-        <a href="certifi-2026.1.4-py3-none-any.whl" class="wheel-link">certifi-2026.1.4-py3-none-any.whl</a>
-        <a href="charset_normalizer-3.4.4-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl" class="wheel-link">charset_normalizer-3.4.4-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl</a>
-        <a href="click-8.3.1-py3-none-any.whl" class="wheel-link">click-8.3.1-py3-none-any.whl</a>
-        <a href="cloudpickle-3.1.2-py3-none-any.whl" class="wheel-link">cloudpickle-3.1.2-py3-none-any.whl</a>
-        <a href="contourpy-1.2.1-cp311-cp311-linux_armv7l.whl" class="wheel-link">contourpy-1.2.1-cp311-cp311-linux_armv7l.whl</a>
-        <a href="cycler-0.12.1-py3-none-any.whl" class="wheel-link">cycler-0.12.1-py3-none-any.whl</a>
-        <a href="Cython-0.29.37-py2.py3-none-any.whl" class="wheel-link">Cython-0.29.37-py2.py3-none-any.whl</a>
-        <a href="dbus_python-1.4.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">dbus_python-1.4.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="Farama_Notifications-0.0.4-py3-none-any.whl" class="wheel-link">Farama_Notifications-0.0.4-py3-none-any.whl</a>
-        <a href="filelock-3.20.3-py3-none-any.whl" class="wheel-link">filelock-3.20.3-py3-none-any.whl</a>
-        <a href="file_read_backwards-3.2.0-py2.py3-none-any.whl" class="wheel-link">file_read_backwards-3.2.0-py2.py3-none-any.whl</a>
-        <a href="Flask-1.1.2-py2.py3-none-any.whl" class="wheel-link">Flask-1.1.2-py2.py3-none-any.whl</a>
-        <a href="flask_cors-6.0.2-py3-none-any.whl" class="wheel-link">flask_cors-6.0.2-py3-none-any.whl</a>
-        <a href="flask_wtf-1.2.2-py3-none-any.whl" class="wheel-link">flask_wtf-1.2.2-py3-none-any.whl</a>
-        <a href="fonttools-4.61.1-py3-none-any.whl" class="wheel-link">fonttools-4.61.1-py3-none-any.whl</a>
-        <a href="fsspec-2026.1.0-py3-none-any.whl" class="wheel-link">fsspec-2026.1.0-py3-none-any.whl</a>
-        <a href="gast-0.7.0-py3-none-any.whl" class="wheel-link">gast-0.7.0-py3-none-any.whl</a>
-        <a href="gpiod-2.4.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">gpiod-2.4.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="gpiodevice-0.0.5-py3-none-any.whl" class="wheel-link">gpiodevice-0.0.5-py3-none-any.whl</a>
-        <a href="gymnasium-0.29.1-py3-none-any.whl" class="wheel-link">gymnasium-0.29.1-py3-none-any.whl</a>
-        <a href="idna-3.11-py3-none-any.whl" class="wheel-link">idna-3.11-py3-none-any.whl</a>
-        <a href="inky-2.2.1-py3-none-any.whl" class="wheel-link">inky-2.2.1-py3-none-any.whl</a>
-        <a href="itsdangerous-1.1.0-py2.py3-none-any.whl" class="wheel-link">itsdangerous-1.1.0-py2.py3-none-any.whl</a>
-        <a href="Jinja2-3.0.3-py3-none-any.whl" class="wheel-link">Jinja2-3.0.3-py3-none-any.whl</a>
-        <a href="kiwisolver-1.4.9-cp311-cp311-linux_armv7l.whl" class="wheel-link">kiwisolver-1.4.9-cp311-cp311-linux_armv7l.whl</a>
-        <a href="lgpio-0.2.2.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">lgpio-0.2.2.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="markupsafe-3.0.3-cp311-cp311-linux_armv7l.whl" class="wheel-link">markupsafe-3.0.3-cp311-cp311-linux_armv7l.whl</a>
-        <a href="matplotlib-3.10.8-cp311-cp311-linux_armv7l.whl" class="wheel-link">matplotlib-3.10.8-cp311-cp311-linux_armv7l.whl</a>
-        <a href="mpmath-1.3.0-py3-none-any.whl" class="wheel-link">mpmath-1.3.0-py3-none-any.whl</a>
-        <a href="networkx-3.6.1-py3-none-any.whl" class="wheel-link">networkx-3.6.1-py3-none-any.whl</a>
-        <a href="numpy-1.26.4-cp311-cp311-linux_armv7l.whl" class="wheel-link">numpy-1.26.4-cp311-cp311-linux_armv7l.whl</a>
-        <a href="oauthlib-3.3.1-py3-none-any.whl" class="wheel-link">oauthlib-3.3.1-py3-none-any.whl</a>
-        <a href="packaging-26.0-py3-none-any.whl" class="wheel-link">packaging-26.0-py3-none-any.whl</a>
-        <a href="pandas-2.0.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">pandas-2.0.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="pillow-12.0.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">pillow-12.0.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="pycryptodome-3.23.0-cp37-abi3-linux_armv7l.whl" class="wheel-link">pycryptodome-3.23.0-cp37-abi3-linux_armv7l.whl</a>
-        <a href="pyparsing-3.3.2-py3-none-any.whl" class="wheel-link">pyparsing-3.3.2-py3-none-any.whl</a>
-        <a href="python_dateutil-2.9.0.post0-py2.py3-none-any.whl" class="wheel-link">python_dateutil-2.9.0.post0-py2.py3-none-any.whl</a>
-        <a href="python_prctl-1.8.1-cp311-cp311-linux_armv7l.whl" class="wheel-link">python_prctl-1.8.1-cp311-cp311-linux_armv7l.whl</a>
-        <a href="pytz-2025.2-py2.py3-none-any.whl" class="wheel-link">pytz-2025.2-py2.py3-none-any.whl</a>
-        <a href="pytz-2025.2-py3-none-any.whl" class="wheel-link">pytz-2025.2-py3-none-any.whl</a>
-        <a href="pyyaml-6.0.3-cp311-cp311-linux_armv7l.whl" class="wheel-link">pyyaml-6.0.3-cp311-cp311-linux_armv7l.whl</a>
-        <a href="requests-2.32.5-py3-none-any.whl" class="wheel-link">requests-2.32.5-py3-none-any.whl</a>
-        <a href="requests_oauthlib-2.0.0-py2.py3-none-any.whl" class="wheel-link">requests_oauthlib-2.0.0-py2.py3-none-any.whl</a>
-        <a href="rpi_hardware_pwm-0.3.0-py3-none-any.whl" class="wheel-link">rpi_hardware_pwm-0.3.0-py3-none-any.whl</a>
-        <a href="rpi_lgpio-0.6-py3-none-any.whl" class="wheel-link">rpi_lgpio-0.6-py3-none-any.whl</a>
-        <a href="scapy-2.7.0-py3-none-any.whl" class="wheel-link">scapy-2.7.0-py3-none-any.whl</a>
-        <a href="setuptools-80.10.1-py3-none-any.whl" class="wheel-link">setuptools-80.10.1-py3-none-any.whl</a>
-        <a href="Shimmy-1.3.0-py3-none-any.whl" class="wheel-link">Shimmy-1.3.0-py3-none-any.whl</a>
-        <a href="six-1.17.0-py2.py3-none-any.whl" class="wheel-link">six-1.17.0-py2.py3-none-any.whl</a>
-        <a href="smbus2-0.6.0-py2.py3-none-any.whl" class="wheel-link">smbus2-0.6.0-py2.py3-none-any.whl</a>
-        <a href="spidev-3.8-cp311-cp311-linux_armv7l.whl" class="wheel-link">spidev-3.8-cp311-cp311-linux_armv7l.whl</a>
-        <a href="stable_baselines3-2.1.0-py3-none-any.whl" class="wheel-link">stable_baselines3-2.1.0-py3-none-any.whl</a>
-        <a href="sympy-1.14.0-py3-none-any.whl" class="wheel-link">sympy-1.14.0-py3-none-any.whl</a>
-        <a href="toml-0.10.2-py2.py3-none-any.whl" class="wheel-link">toml-0.10.2-py2.py3-none-any.whl</a>
-        <a href="torch-2.1.0a0+git7bcf7da-cp311-cp311-linux_armv7l.whl" class="wheel-link">torch-2.1.0a0+git7bcf7da-cp311-cp311-linux_armv7l.whl</a>
-        <a href="torchvision-0.16.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">torchvision-0.16.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="tweepy-4.16.0-py3-none-any.whl" class="wheel-link">tweepy-4.16.0-py3-none-any.whl</a>
-        <a href="typing_extensions-4.15.0-py3-none-any.whl" class="wheel-link">typing_extensions-4.15.0-py3-none-any.whl</a>
-        <a href="tzdata-2025.3-py2.py3-none-any.whl" class="wheel-link">tzdata-2025.3-py2.py3-none-any.whl</a>
-        <a href="urllib3-2.6.3-py3-none-any.whl" class="wheel-link">urllib3-2.6.3-py3-none-any.whl</a>
-        <a href="websockets-16.0-cp311-cp311-linux_armv7l.whl" class="wheel-link">websockets-16.0-cp311-cp311-linux_armv7l.whl</a>
-        <a href="Werkzeug-2.0.0-py3-none-any.whl" class="wheel-link">Werkzeug-2.0.0-py3-none-any.whl</a>
-        <a href="wtforms-3.2.1-py3-none-any.whl" class="wheel-link">wtforms-3.2.1-py3-none-any.whl</a>
-    </div>
-    <div class="footer">
-        Generated by Pwny-Indexer | PEP 503 Compatible
-    </div>
-</body>
-</html>
+    <h2>Forge: arm32-v7l | Python: 3.11</h2>
+    <a href="certifi-2026.1.4-py3-none-any.whl">certifi-2026.1.4-py3-none-any.whl</a><br>
+    <a href="charset_normalizer-3.4.4-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl">charset_normalizer-3.4.4-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl</a><br>
+    <a href="click-8.3.1-py3-none-any.whl">click-8.3.1-py3-none-any.whl</a><br>
+    <a href="cloudpickle-3.1.2-py3-none-any.whl">cloudpickle-3.1.2-py3-none-any.whl</a><br>
+    <a href="colorzero-2.0-py2.py3-none-any.whl">colorzero-2.0-py2.py3-none-any.whl</a><br>
+    <a href="contourpy-1.2.1-cp311-cp311-linux_armv7l.whl">contourpy-1.2.1-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="cycler-0.12.1-py3-none-any.whl">cycler-0.12.1-py3-none-any.whl</a><br>
+    <a href="Cython-0.29.37-cp311-cp311-linux_armv7l.whl">Cython-0.29.37-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="dbus_python-1.4.0-cp311-cp311-linux_armv7l.whl">dbus_python-1.4.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="filelock-3.20.3-py3-none-any.whl">filelock-3.20.3-py3-none-any.whl</a><br>
+    <a href="file_read_backwards-3.2.0-py2.py3-none-any.whl">file_read_backwards-3.2.0-py2.py3-none-any.whl</a><br>
+    <a href="Flask-1.1.2-py2.py3-none-any.whl">Flask-1.1.2-py2.py3-none-any.whl</a><br>
+    <a href="flask_cors-6.0.2-py3-none-any.whl">flask_cors-6.0.2-py3-none-any.whl</a><br>
+    <a href="flask_wtf-1.2.2-py3-none-any.whl">flask_wtf-1.2.2-py3-none-any.whl</a><br>
+    <a href="fonttools-4.61.1-py3-none-any.whl">fonttools-4.61.1-py3-none-any.whl</a><br>
+    <a href="fsspec-2026.1.0-py3-none-any.whl">fsspec-2026.1.0-py3-none-any.whl</a><br>
+    <a href="gast-0.7.0-py3-none-any.whl">gast-0.7.0-py3-none-any.whl</a><br>
+    <a href="gpiod-2.4.0-cp311-cp311-linux_armv7l.whl">gpiod-2.4.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="gpiodevice-0.0.5-py3-none-any.whl">gpiodevice-0.0.5-py3-none-any.whl</a><br>
+    <a href="gpiozero-2.0.1-py3-none-any.whl">gpiozero-2.0.1-py3-none-any.whl</a><br>
+    <a href="gym-0.21.0-py3-none-any.whl">gym-0.21.0-py3-none-any.whl</a><br>
+    <a href="idna-3.11-py3-none-any.whl">idna-3.11-py3-none-any.whl</a><br>
+    <a href="importlib_metadata-4.13.0-py3-none-any.whl">importlib_metadata-4.13.0-py3-none-any.whl</a><br>
+    <a href="inky-2.2.1-py3-none-any.whl">inky-2.2.1-py3-none-any.whl</a><br>
+    <a href="itsdangerous-1.1.0-py2.py3-none-any.whl">itsdangerous-1.1.0-py2.py3-none-any.whl</a><br>
+    <a href="Jinja2-3.0.3-py3-none-any.whl">Jinja2-3.0.3-py3-none-any.whl</a><br>
+    <a href="kiwisolver-1.4.9-cp311-cp311-linux_armv7l.whl">kiwisolver-1.4.9-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="lgpio-0.2.2.0-cp311-cp311-linux_armv7l.whl">lgpio-0.2.2.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="markupsafe-3.0.3-cp311-cp311-linux_armv7l.whl">markupsafe-3.0.3-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="matplotlib-3.10.8-cp311-cp311-linux_armv7l.whl">matplotlib-3.10.8-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="mpmath-1.3.0-py3-none-any.whl">mpmath-1.3.0-py3-none-any.whl</a><br>
+    <a href="networkx-3.6.1-py3-none-any.whl">networkx-3.6.1-py3-none-any.whl</a><br>
+    <a href="numpy-1.26.4-cp311-cp311-linux_armv7l.whl">numpy-1.26.4-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="oauthlib-3.3.1-py3-none-any.whl">oauthlib-3.3.1-py3-none-any.whl</a><br>
+    <a href="opencv_python-4.7.0.72-cp311-cp311-linux_armv7l.whl">opencv_python-4.7.0.72-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="packaging-26.0-py3-none-any.whl">packaging-26.0-py3-none-any.whl</a><br>
+    <a href="pandas-2.0.0-cp311-cp311-linux_armv7l.whl">pandas-2.0.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="pigpio-1.78-py2.py3-none-any.whl">pigpio-1.78-py2.py3-none-any.whl</a><br>
+    <a href="pillow-12.0.0-cp311-cp311-linux_armv7l.whl">pillow-12.0.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="pycryptodome-3.23.0-cp37-abi3-linux_armv7l.whl">pycryptodome-3.23.0-cp37-abi3-linux_armv7l.whl</a><br>
+    <a href="pyparsing-3.3.2-py3-none-any.whl">pyparsing-3.3.2-py3-none-any.whl</a><br>
+    <a href="python_dateutil-2.9.0.post0-py2.py3-none-any.whl">python_dateutil-2.9.0.post0-py2.py3-none-any.whl</a><br>
+    <a href="python_prctl-1.8.1-cp311-cp311-linux_armv7l.whl">python_prctl-1.8.1-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="pytz-2025.2-py2.py3-none-any.whl">pytz-2025.2-py2.py3-none-any.whl</a><br>
+    <a href="pytz-2025.2-py3-none-any.whl">pytz-2025.2-py3-none-any.whl</a><br>
+    <a href="pyyaml-6.0.3-cp311-cp311-linux_armv7l.whl">pyyaml-6.0.3-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="requests-2.32.5-py3-none-any.whl">requests-2.32.5-py3-none-any.whl</a><br>
+    <a href="requests_oauthlib-2.0.0-py2.py3-none-any.whl">requests_oauthlib-2.0.0-py2.py3-none-any.whl</a><br>
+    <a href="rpi_hardware_pwm-0.3.0-py3-none-any.whl">rpi_hardware_pwm-0.3.0-py3-none-any.whl</a><br>
+    <a href="rpi_lgpio-0.6-py3-none-any.whl">rpi_lgpio-0.6-py3-none-any.whl</a><br>
+    <a href="scapy-2.7.0-py3-none-any.whl">scapy-2.7.0-py3-none-any.whl</a><br>
+    <a href="setuptools-80.10.2-py3-none-any.whl">setuptools-80.10.2-py3-none-any.whl</a><br>
+    <a href="six-1.17.0-py2.py3-none-any.whl">six-1.17.0-py2.py3-none-any.whl</a><br>
+    <a href="smbus2-0.6.0-py2.py3-none-any.whl">smbus2-0.6.0-py2.py3-none-any.whl</a><br>
+    <a href="spidev-3.8-cp311-cp311-linux_armv7l.whl">spidev-3.8-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="stable_baselines3-1.8.0-py3-none-any.whl">stable_baselines3-1.8.0-py3-none-any.whl</a><br>
+    <a href="sympy-1.14.0-py3-none-any.whl">sympy-1.14.0-py3-none-any.whl</a><br>
+    <a href="toml-0.10.2-py2.py3-none-any.whl">toml-0.10.2-py2.py3-none-any.whl</a><br>
+    <a href="torch-2.1.0a0+git7bcf7da-cp311-cp311-linux_armv7l.whl">torch-2.1.0a0+git7bcf7da-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="torchvision-0.16.0-cp311-cp311-linux_armv7l.whl">torchvision-0.16.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="tweepy-4.16.0-py3-none-any.whl">tweepy-4.16.0-py3-none-any.whl</a><br>
+    <a href="typing_extensions-4.15.0-py3-none-any.whl">typing_extensions-4.15.0-py3-none-any.whl</a><br>
+    <a href="tzdata-2025.3-py2.py3-none-any.whl">tzdata-2025.3-py2.py3-none-any.whl</a><br>
+    <a href="urllib3-2.6.3-py3-none-any.whl">urllib3-2.6.3-py3-none-any.whl</a><br>
+    <a href="websockets-16.0-cp311-cp311-linux_armv7l.whl">websockets-16.0-cp311-cp311-linux_armv7l.whl</a><br>
+    <a href="Werkzeug-2.0.0-py3-none-any.whl">Werkzeug-2.0.0-py3-none-any.whl</a><br>
+    <a href="wheel-0.46.3-py3-none-any.whl">wheel-0.46.3-py3-none-any.whl</a><br>
+    <a href="wtforms-3.2.1-py3-none-any.whl">wtforms-3.2.1-py3-none-any.whl</a><br>
+    <a href="zipp-3.23.0-py3-none-any.whl">zipp-3.23.0-py3-none-any.whl</a><br>
+</body></html>
