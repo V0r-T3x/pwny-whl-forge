@@ -1,0 +1,14 @@
+FROM arm32v7/debian:bookworm
+
+# Add the specific system headers for dbus and other pwnagotchi essentials
+RUN apt update && apt install -y \
+    python3-pip python3-dev python3-wheel build-essential git libssl-dev libfreetype6-dev\
+    libdbus-1-dev libglib2.0-dev m4 libyaml-dev libatomic-ops-dev libswscale-dev\
+    libjpeg-dev libpng-dev zlib1g-dev pkg-config libavcodec-dev libavformat-dev\
+    gfortran libopenblas-dev liblapack-dev cmake ninja-build libatomic1\
+    && rm -rf /var/lib/apt/lists/*
+
+# Pre-install the build system tools to avoid isolation issues
+RUN export PIP_BREAK_SYSTEM_PACKAGES=1 && \
+    python3 -m pip install --upgrade pip setuptools wheel && \
+    python3 -m pip install meson-python meson ninja

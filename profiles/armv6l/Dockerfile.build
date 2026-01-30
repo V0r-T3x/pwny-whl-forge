@@ -1,0 +1,24 @@
+FROM balenalib/raspberry-pi-debian:bookworm
+
+# 1. Define the version you want to build
+ARG PYTHON_VERSION=3.11.7
+
+# 2. Add wget and ca-certificates to the install list
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget ca-certificates \
+    python3-pip python3-dev python3-wheel build-essential git libssl-dev libfreetype6-dev \
+    libdbus-1-dev libglib2.0-dev m4 libyaml-dev libatomic-ops-dev libswscale-dev \
+    libjpeg-dev libpng-dev zlib1g-dev pkg-config libavcodec-dev libavformat-dev \
+    gfortran libopenblas-dev liblapack-dev cmake ninja-build libatomic1 \
+    && ln -sf /usr/bin/ninja-build /usr/bin/ninja \
+    && rm -rf /var/lib/apt/lists/*
+
+# 3. Compile Python (The variables now exist)
+RUN wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz \
+    && tar xzf Python-$PYTHON_VERSION.tgz \
+    && cd Python-$PYTHON_VERSION \
+    && ./configure --prefix=/usr/local --enable-optimizations --with-lto \
+    && make -j$(nproc) \
+    && make altinstall \
+    && cd .. \
+    && rm -rf Python-$PYTHON_VERSION*

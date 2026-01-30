@@ -64,6 +64,16 @@ find "$BASE_DIR" -maxdepth 2 -type d -name "wheelhouse" | while read -r WH_PATH;
     cat << EOF > "$WH_PATH/index.html"
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Forge: $ARCH</title>
+    <style>
+        body { font-family: 'SF Mono', monospace; background: #050505; color: #00ff41; padding: 3rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-top: 40px; }
+        .card { border: 1px solid #222; padding: 20px; background: #0a0a0a; border-left: 5px solid #00ff41; }
+        .tag { font-size: 0.8rem; background: #1a1a1a; color: #00ff41; padding: 3px 8px; border: 1px solid #333; margin-right: 5px; }
+        a { color: inherit; text-decoration: none; }
+    </style>
+</head>
 <body>
     <h2>Forge: $ARCH | Python: $PY_DISPLAY</h2>
 EOF
